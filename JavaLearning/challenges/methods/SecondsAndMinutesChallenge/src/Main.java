@@ -1,19 +1,33 @@
 /*
-    Conversion Program:
-    Task:
-        - Create a method that converts seconds to hours, minutes, and seconds.
-        - Create an overloaded method that converts minutes and seconds to hours, minutes, and seconds.
-        - Format should be "XXh YYm ZZs" (X = # of hours Y = # of minutes and Z = # of seconds).
-        - Add Validation
-            - First method: Seconds parameter can only be 0 or greater
-            - Second method: Minutes parameter can only be 0 or greater and Seconds parameter can only
-              be between 0 and 59.
+Seconds and Minutes Conversion Program
+Task Summary:
+    - Create a method that converts a total number of seconds to hours, minutes, and leftover seconds.
+    - Create an overloaded method that converts minutes and seconds to hours, minutes, and leftover
+    seconds.
+    - Output format should be "XXh YYm ZZs".
+    - Add Validation
+        - First method: Seconds must be 0 or greater
+        - Second method: Minutes must be 0 or greater AND Seconds must be between 0 and 59.
+
+Reasoning:
+- For the first method I tried multiple approaches:
+    - 1a. Breaking down seconds to its respective values: Hours, Minutes, remainingSeconds.
+    - 1b. Break down seconds into Minutes and remainingSeconds then pass to the overloaded method
+    - 1c. Breakdown seconds directly into the overloaded method call (more concise, but impacted
+    readability)
+    - 1d. Use a ternary for validation and the overloaded method call, (heavily impacted
+    readability)
+- For overloaded method I tried a nested ternary, but that had a severe impact on readability
+
+Notes:
+- Found using another method to do the work helped streamline the code and reduce code duplication.
+- When creating Validation message, be as specific as possible so that the user knows what caused the
+error
  */
 
 public class Main {
 
     public static void main(String[] args) {
-        //TODO: invoke both methods using 3945, -3945, 65mins 45s, and -65mins 45s as parameters
         String firstTestCase = getDurationString(3945);
         String secondTestCase = getDurationString(65,45);
         String thirdTestCase = getDurationString(-3945);
@@ -24,86 +38,30 @@ public class Main {
         System.out.println(thirdTestCase);
         System.out.println(fourthTestCase);
 
-        String fifthTestCase = getDurationString(60, 458); // Test case for over 59s
+        String fifthTestCase = getDurationString(60, 458);
         System.out.println(fifthTestCase);
 
-        String sixthTestCase = getDurationString(60,-59); // Test case for under 0s
+        String sixthTestCase = getDurationString(60,-59);
         System.out.println(sixthTestCase);
     }
 
-    // Convert seconds to hours, minutes, and seconds
     public static String getDurationString(int seconds) {
-        // Validation message for seconds
         if (seconds < 0) {
             return "Invalid seconds parameter (" + seconds + "), must be a positive integer value.";
         }
 
-        /*
-        1a. Break down seconds to its respective values: Hours, Minutes, Seconds.
-            NOTE: in order get the actual minutes you need to get the remainder minutes
-                  after getting total minutes for hours.
-            NOTE: Shouldn't use actual seconds as the parameter passed to return statement since it will
-            just pass whole amount
-
-        int minutes = seconds / 60;
-        int hours = minutes / 60;
-        int remainingMinutes = minutes % 60;
-        int remainingSeconds = seconds % 60;
-
-        int remainingSeconds = seconds % 60;
-
-        1b. Overloaded method already does most of the work, just pass minutes, and remainingSeconds:
-
-        int minutes = seconds / 60;
-        int remainingSeconds = seconds % 60;
-
-        return getDurationString(minutes, remainingSeconds);
-
-        1c. Pass expressions directly into method call for more conciseness with an negative impact
-        on readability:
-
-        return getDurationString((seconds / 60), (seconds % 60));
-
-        1d. Instead of an if statement to check for validation, could use a ternary. Definitely
-        affects readability:
-
-        return (seconds < 0) ? "Invalid seconds parameter (" + seconds + ")" :
-                getDurationString((seconds / 60), (seconds % 60));
-         */
-
         int minutes = seconds / 60;
         int remainingSeconds = seconds % 60;
 
         return getDurationString(minutes, remainingSeconds);
     }
 
-    // Convert minutes and seconds to hours, minutes, and seconds
     public static String getDurationString(int minutes, int seconds) {
-        // Validation message for minutes and seconds
         if (minutes < 0) {
             return "Invalid minutes (" + minutes + "), must be a positive integer value.";
         } else if (seconds < 0 || seconds > 59) {
             return "Invalid seconds (" + seconds + "), must be between the values of 0 and 59.";
         }
-
-        /*
-        1a. Take the calculation from the original method:
-
-        int minutes = seconds / 60; -> take this out since minutes is already a parameter
-        int hours = minutes / 60;
-        int remainingMinutes = minutes % 60;
-        int remainingSeconds = seconds % 60; -> take this away since seconds is already a parameter
-                                                and seconds can't be greater than 59
-
-        int remainingSeconds = seconds % 60;
-
-        1b. Use a nested ternary with a severe impact on readability:
-
-        return (minutes < 0) ? "Invalid minutes (" + minutes + ")" :
-               (seconds < 0 || seconds > 59)  ? "Invalid seconds (" + seconds + ")" :
-                hours + "h " + remainingMinutes + "m " + seconds + "s";
-         */
-
 
         int hours = minutes / 60;
         int remainingMinutes = minutes % 60;
