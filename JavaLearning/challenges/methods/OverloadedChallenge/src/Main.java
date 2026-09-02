@@ -1,46 +1,37 @@
 /*
-Conversion Program:
+Inches to Centimeters Conversion Program
 Task:
-    - Create a method that converts inches to centimeters
-    - Create a overloaded method that converts feet and inches to centimeters
-    - 1in = 2.54cm
+    - Create a method called convertToCentimeters that converts inches to centimeters
+    - Create an  overloaded method that converts feet and inches to centimeters
+    - 1 inch = 2.54 cm
+    - 12 inches = 1 foot
+
+Reasoning:
+    - Tried multiple approaches for the overloaded method
+        - a. I tried to convert feet to inches then calculate the centimeters from the total inches
+        using the conversion method.
+        - b. I then noticed that the original method already converts inches to centimeters, so I invoked
+        the first method and called the total inches from the first approach as an argument.
+        - c. I tried passing the total inches expression directly into the method call, but it impacted
+        readability
+
+Notes:
+    - Using the original conversion method inside the overloaded method helped reduce duplication.
+    - This challenge reinforced how overloaded methods can streamline logic and improve maintainability.
  */
 
 public class Main {
 
     public static void main(String[] args) {
-        //TODO: invoke both methods using 68in and 5ft, 8in as test cases
         System.out.println("68in = " + convertToCentimeters(68) + "cm");
         System.out.println("5ft 8in = " + convertToCentimeters(5,8) + "cm");
     }
 
-    // Convert inches to centimeters
     public static double convertToCentimeters(int inches) {
         return inches * 2.54;
     }
 
-    // Convert feet & inches to centimeters
     public static double convertToCentimeters(int feet, int inches) {
-        /*
-        1a. First approach was to convert feet to inches then calculate cm from the total inches
-        int totalInches = (feet * 12) + inches;
-
-        return totalInches = 2.54;
-         */
-
-        /*
-        1b. Noticed that the original method converts in to cm
-        int totalInches = (feet * 12) + inches;
-
-        return convertToCentimeters(totalInches);
-         */
-
-        /*
-        1c. Can pass expression directly into method call, unsure if conciseness is worth the impact
-        on readability
-        return convertToCentimeters((feet * 12) + inches);
-         */
-
         int totalInches = (feet * 12) + inches;
 
         return convertToCentimeters(totalInches);
